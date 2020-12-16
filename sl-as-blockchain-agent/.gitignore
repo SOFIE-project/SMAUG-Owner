@@ -1,0 +1,6 @@
+app
+build
+node_modules
+types
+.vscode
+*.tsbuildinfo

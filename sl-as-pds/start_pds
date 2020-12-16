@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+echo "Building PDS image..."
+./docker-build.sh
+
+CONTAINER_NAME=PDS
+
+docker rm -f $CONTAINER_NAME > /dev/null 2>&1
+
+echo "Starting PDS container..."
+CMD="docker run -tid --rm -p 9001-9002:9001-9002 --network ethereum-authorisation --name $CONTAINER_NAME pds"
+echo $CMD
+DOCKER_CONTAINER_ID=$(eval $CMD)
+echo "Container started: $DOCKER_CONTAINER_ID"

@@ -1,0 +1,2 @@
+graft smaug_iot/controllers/wot/static
+graft smaug_iot/controllers/wot/templates

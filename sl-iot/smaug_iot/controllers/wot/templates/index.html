@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+      integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+      crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  </head>
+  <body>
+    <div class="container">
+
+    <h2 class="mt-4">Authorization</h2>
+
+    <div class="form-group">
+      <label for="bearer-token">Bearer token</label>
+      <input class="form-control" type="text" id="bearer-token" value="1;all;2099">
+    </div>
+
+    <p>Alternatively you can use these mock tokens:<br/>
+      <b>For mock access controller:</b><br/>
+      <a href="#" class="token-setter" data-token="1;all;2099">all permissions</a>,
+      <a href="#" class="token-setter" data-token="1;state;2099">status only</a>,
+      <a href="#" class="token-setter" data-token="1;unlock;2099">unlock only</a>,
+      <a href="#" class="token-setter" data-token="0;;2020">invalid</a>,
+      <a href="#" class="token-setter" data-token="1;all;2000">expired</a>,
+      <a href="#" class="token-setter" data-token="">nothing</a>
+
+      <br/>
+      <b>For IAA access controller:</b><br/>
+      <a href="#" class="token-setter" data-token="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpZCI6IjM2ZGNlNjBiMzg4YjA2NDUyNmI5MDJhOGRjMzIyM2NhNGMxMWFmNWYiLCJqdGkiOiIzNmRjZTYwYjM4OGIwNjQ1MjZiOTAyYThkYzMyMjNjYTRjMTFhZjVmIiwiaXNzIjoiTktHS3RjTndzc1RvUDVmN3Voc0VzNCIsImF1ZCI6InNvZmllLWlvdC5ldSIsInN1YiI6Im15ZGlkIiwiZXhwIjoxNTgxMzQyNDE4LCJpYXQiOjE1ODEzMzg4MTgsInRva2VuX3R5cGUiOiJiZWFyZXIiLCJzY29wZSI6bnVsbH0.XSyQTgTt1WByT46NJLwrlcU3BUXzWf4MDZE3M4bLAh3HwFAwD6Dhi1IVeLAxNscc0bCgS-3KgyD1fdtiiJH7WktQIc269OLNxhnaXun_LxEYrWQCRHIFb0Je8Eg6CvdOB3shrlNZHmVELe6gaU0tQJ0-cdBbuz0udq_Mou1WLEwe6vp3mfgLiuTe2pT4wVI2PldvmUujeH6IpEop1nESYVA06pK6nV08d1RW7c_sRPgJdpSGGv-QhRcxBjDowkUs9J0OaTtGlExKhMv_17P96EskyOqCHku6RyydFccYbd5tl-Wh-9MqI4Me8z3BBSKPiIvQ2mo5OMcBmI0WwXb6jw">prebaked</a>
+
+    </p>
+
+    <h2 class="mt-4">Actions</h2>
+
+    <div class="row">
+      <div class="mb-1 col-sm-4 col-lg-2">
+	<button class="btn btn-lg btn-info btn-block" id="action-status">Query status</button>
+      </div>
+      <div class="mb-1 col-sm-4 col-lg-2">
+	<button class="btn btn-lg btn-primary btn-block" id="action-lock">&#x1f512; Lock</button>
+      </div>
+      <div class="mb-1 col-sm-4 col-lg-2">
+	<button class="btn btn-lg btn-primary btn-block" id="action-unlock">&#x1f513; Unlock</button>
+      </div>
+    </div>
+
+    <h2 class="mt-4">Results</h2>
+
+    <div class="row mt-3">
+      <div class="col"><b>Sent:</b></div>
+    </div>
+    <div class="row">
+      <div class="col-3">URL</div>
+      <div class="col text-monospace" id="url">none</div>
+    </div>
+    <div class="row">
+      <div class="col-3">Method</div>
+      <div class="col text-monospace" id="method">none</div>
+    </div>
+    <div class="row">
+      <div class="col mt-3"><b>Received:</b></div>
+    </div>
+    <div class="row">
+      <div class="col-3">Code</div>
+      <div class="col text-monospace" id="code">none</div>
+    </div>
+    <div class="row">
+      <div class="col-3">Type</div>
+      <div class="col text-monospace" id="type">none</div>
+    </div>
+    <div class="row">
+      <div class="col-3">Status</div>
+      <div class="col text-monospace" id="status">none</div>
+    </div>
+    <div class="row mt-3">
+      <div class="col"><b>Result text:</b></div>
+    </div>
+    <div class="row w-100">
+      <div class="col w-100">
+	<pre class="w-100 p-3" style="background: black; color: white;" id="result">nothing yet ...</pre>
+      </div>
+    </div>
+
+
+    <!-- <\!-- <p> -\-> -->
+    <!-- <\!--   <b>Sent:</b><br/> -\-> -->
+    <!-- <\!--   URL: <span id="url">none</span><br/> -\-> -->
+    <!-- <\!--   Method: <span id="method">none</span> -\-> -->
+    <!-- <\!-- </p> -\-> -->
+
+    <!-- <p> -->
+    <!--   <b>Received:</b><br/> -->
+    <!--   Code: <span id="code">none</span><br/> -->
+    <!--   Type: <span id="type">none</span><br/> -->
+    <!--   Status: <span id="status">none</span> -->
+    <!-- </p> -->
+
+    <!-- Result text: -->
+
+
+    <script src="static/app.js"></script>
+    </div>
+  </body>
+</html>
